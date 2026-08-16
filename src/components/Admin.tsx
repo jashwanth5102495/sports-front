@@ -2,13 +2,7 @@ import { useState, useEffect } from 'react';
 import { ArrowLeft, LayoutDashboard, Shield, LogOut, UploadCloud, Calendar, Newspaper, Image as ImageIcon, Trash2, FileText, Plus, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '../utils/cn';
-
-// Helper to extract YouTube video ID
-function getYouTubeId(url: string) {
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  const match = url.match(regExp);
-  return (match && match[2].length === 11) ? match[2] : null;
-}
+import { getYouTubeId } from '../utils/youtube';
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -80,12 +74,12 @@ export default function Admin() {
   ];
 
   const DEFAULT_HERO_STATS: StatItem[] = [
-    { label: 'POINTS', value: '368' },
-    { label: 'GOALS', value: '171' },
-    { label: 'ASSISTS', value: '197' },
-    { label: 'ALL-AMER', value: '2' },
-    { label: "NAT'L CHAMP", value: '1' },
-    { label: 'ALL-B1G', value: '3' },
+    { label: 'CAREER POINTS', value: '368' },
+    { label: 'CAREER GOALS', value: '171' },
+    { label: 'CAREER ASSISTS', value: '197' },
+    { label: 'ALL-AMERICAN', value: '2' },
+    { label: 'NCAA NATIONAL CHAMPION', value: '1' },
+    { label: 'BIG TEN CHAMPIONSHIPS', value: '3' },
   ];
 
   const parseStatItems = (json: string | undefined, fallback: StatItem[]): StatItem[] => {
@@ -680,16 +674,15 @@ export default function Admin() {
                         <div className="w-full h-full flex items-center justify-center text-white/20"><Calendar size={32} /></div>
                       )}
                       
-                      {/* Delete Button Overlay */}
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button 
-                          onClick={() => handleDeleteEvent(ev.id)}
-                          className="bg-red-500 hover:bg-red-600 text-white p-3 rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
-                          title="Delete Event"
-                        >
-                          <Trash2 size={20} />
-                        </button>
-                      </div>
+                      {/* Delete Button */}
+                      <button 
+                        type="button"
+                        onClick={() => handleDeleteEvent(ev.id)}
+                        className="absolute top-2 right-2 z-10 bg-red-600 hover:bg-red-700 text-white p-2 rounded-full shadow-md transition-colors"
+                        title="Delete Event"
+                      >
+                        <Trash2 size={16} />
+                      </button>
 
                       <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/90 to-transparent">
                         <p className="text-white text-xs font-bold truncate">{ev.title}</p>
@@ -725,16 +718,15 @@ export default function Admin() {
                     <div key={img.id} className="relative group rounded overflow-hidden border border-white/10 aspect-video bg-black/50">
                       <img src={img.base64Data} alt={img.title || 'Gallery image'} className="w-full h-full object-cover transition duration-500 group-hover:scale-110 group-hover:opacity-50" />
                       
-                      {/* Delete Button Overlay */}
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button 
-                          onClick={() => handleDeleteImage(img.id)}
-                          className="bg-red-500 hover:bg-red-600 text-white p-3 rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
-                          title="Delete Image"
-                        >
-                          <Trash2 size={20} />
-                        </button>
-                      </div>
+                      {/* Delete Button */}
+                      <button 
+                        type="button"
+                        onClick={() => handleDeleteImage(img.id)}
+                        className="absolute top-2 right-2 z-10 bg-red-600 hover:bg-red-700 text-white p-2 rounded-full shadow-md transition-colors"
+                        title="Delete Image"
+                      >
+                        <Trash2 size={16} />
+                      </button>
 
                       {img.title && (
                         <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/90 to-transparent">
@@ -955,17 +947,15 @@ export default function Admin() {
                       <div key={video.id} className="relative group rounded overflow-hidden border border-white/10 aspect-video bg-black/50">
                         <img src={thumb} alt={video.title} className="w-full h-full object-cover transition duration-500 group-hover:scale-110 group-hover:opacity-50" />
                         
-                        {/* Delete Button Overlay */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <button 
-                            type="button"
-                            onClick={() => handleDeleteVideo(video.id)}
-                            className="bg-red-500 hover:bg-red-600 text-white p-3 rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
-                            title="Delete Video"
-                          >
-                            <Trash2 size={20} />
-                          </button>
-                        </div>
+                        {/* Delete Button */}
+                        <button 
+                          type="button"
+                          onClick={() => handleDeleteVideo(video.id)}
+                          className="absolute top-2 right-2 z-10 bg-red-600 hover:bg-red-700 text-white p-2 rounded-full shadow-md transition-colors"
+                          title="Delete Video"
+                        >
+                          <Trash2 size={16} />
+                        </button>
 
                         <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/90 to-transparent">
                           <p className="text-white text-xs font-bold truncate">

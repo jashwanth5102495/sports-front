@@ -14,7 +14,7 @@ export const career = [
     team: "Northwestern Wildcats",
     competition: "NCAA",
     description: "Led Northwestern with 44 assists and recorded a career-high 9 assists in a single game.",
-    image: "/gal/3.webp",
+    image: "/3.webp",
     position: "object-top"
   },
   {
@@ -42,6 +42,6 @@ export const career = [
     competition: "WLL",
     description: "Professional attacker with New York Charging in the Women's Lacrosse League.",
     image: "/gal/wa_img_28.webp",
-    position: "object-center"
+    position: "object-top"
   }
 ];

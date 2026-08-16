@@ -4,12 +4,12 @@ import { player } from '../data/player';
 import { MapPin, Target } from 'lucide-react';
 
 const DEFAULT_HERO_STATS = [
-  { label: 'POINTS', value: 368 },
-  { label: 'GOALS', value: 171 },
-  { label: 'ASSISTS', value: 197 },
-  { label: 'ALL-AMER', value: 2 },
-  { label: "NAT'L CHAMP", value: 1 },
-  { label: 'ALL-B1G', value: 3 },
+  { label: 'CAREER POINTS', value: 368 },
+  { label: 'CAREER GOALS', value: 171 },
+  { label: 'CAREER ASSISTS', value: 197 },
+  { label: 'ALL-AMERICAN', value: 2 },
+  { label: 'NCAA NATIONAL CHAMPION', value: 1 },
+  { label: 'BIG TEN CHAMPIONSHIPS', value: 3 },
 ];
 
 const heroImages = [
