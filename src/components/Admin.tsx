@@ -3,6 +3,13 @@ import { ArrowLeft, LayoutDashboard, Shield, LogOut, UploadCloud, Calendar, News
 import { Link } from 'react-router-dom';
 import { cn } from '../utils/cn';
 
+// Helper to extract YouTube video ID
+function getYouTubeId(url: string) {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : null;
+}
+
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState('');
