@@ -152,7 +152,7 @@ export default function Admin() {
       setFeaturedDescription(map['featured_description'] || '');
       setStatistics(parseStatItems(map['statistics'], DEFAULT_STATISTICS));
       setHeroStats(parseStatItems(map['hero_stats'], DEFAULT_HERO_STATS));
-      setContactDescription(map['contact_description'] || 'For Skills Sessions, Private Groups, Team Training, Camps/Clinics, and media requests, please use the form or reach out directly.');
+      setContactDescription(map['contact_description'] || "For skills sessions, virtual training, private group instruction, team or individual camps/clinics, and media inquiries, please complete the form or contact me directly.");
       setContactEmail(map['contact_email'] || 'erincoykendalllax@gmail.com');
       setContactInstagram(map['contact_instagram'] || 'https://www.instagram.com/erincoykendall/?hl=en');
       setEventsEmptyMessage(map['events_empty_message'] || 'Updates will be posted here. Check back soon for upcoming events and appearances.');

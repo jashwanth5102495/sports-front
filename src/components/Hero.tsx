@@ -177,7 +177,7 @@ export default function Hero() {
               She's definitely, without a doubt, the smartest lacrosse player we've ever had here. She's a coach on the field... She sees things most people don't see.
             </h3>
             <p className="text-accent font-bold text-sm tracking-widest uppercase drop-shadow-md">— Scott Hiller</p>
-            <p className="text-white/60 text-xs mt-1">Assistant Coach Northwestern</p>
+            <p className="text-white/60 text-xs mt-1">Assistant Coach, Northwestern Lacrosse</p>
           </motion.div>
 
         </div>

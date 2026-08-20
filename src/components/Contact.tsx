@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Mail } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
-const DEFAULT_DESCRIPTION = 'For Skills Sessions, Private Groups, Team Training, Camps/Clinics, and media requests, please use the form or reach out directly.';
+const DEFAULT_DESCRIPTION = "For skills sessions, virtual training, private group instruction, team or individual camps/clinics, and media inquiries, please complete the form or contact me directly.";
 const DEFAULT_EMAIL = 'erincoykendalllax@gmail.com';
 const DEFAULT_INSTAGRAM = 'https://www.instagram.com/erincoykendall/?hl=en';
 

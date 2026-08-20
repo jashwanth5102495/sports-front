@@ -4,9 +4,9 @@ export default function Footer() {
       <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-8">
         
         <div className="flex flex-col items-center md:items-start">
-          <a href="#home" className="flex items-center gap-1.5 mb-4 group hover:opacity-90 transition-opacity">
+          <a href="#home" className="flex items-center mb-4 group hover:opacity-90 transition-opacity">
             <span className="text-xl font-nav font-bold italic text-white uppercase leading-none tracking-tight">ERIN</span>
-            <span className="text-2xl font-logo-script text-accent leading-none -ml-1 mt-1 pr-2">Coykendall</span>
+            <span className="text-xl font-nav font-bold italic text-accent uppercase leading-none tracking-tight ml-1.5">COYKENDALL</span>
           </a>
           <p className="text-zinc-500 text-sm font-medium tracking-wide uppercase">
             Official Portfolio &copy; {new Date().getFullYear()}

@@ -73,7 +73,7 @@ export default function Gallery() {
           className="mt-24 mb-12"
         >
           <h2 className="text-4xl md:text-5xl font-display font-bold uppercase mb-4 text-white">
-            Video<span className="text-accent">'s</span>
+            Videos
           </h2>
         </motion.div>
 
