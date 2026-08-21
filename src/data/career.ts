@@ -18,6 +18,15 @@ export const career = [
     position: "object-top"
   },
   {
+    year: "2022",
+    title: "Breakout Junior Season",
+    team: "Northwestern Wildcats",
+    competition: "NCAA",
+    description: "Had a breakout junior season with 45 goals, 37 assists, and 82 points. Led the team in assists, ranked 3rd in the Big Ten, and earned First Team All-Big Ten honors.",
+    image: "/gal/wa_img_19.webp",
+    position: "object-top"
+  },
+  {
     year: "2023",
     title: "National Champion",
     team: "Northwestern Wildcats",

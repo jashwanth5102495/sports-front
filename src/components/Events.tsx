@@ -72,11 +72,11 @@ export default function Events() {
             </p>
           </motion.div>
         ) : (
-          <div className="overflow-hidden relative">
+          <div className="overflow-x-auto lg:overflow-hidden relative py-2 no-scrollbar">
             <div 
-              className={`flex gap-8 w-max ${isScrolling ? 'animate-marquee' : ''} hover:pause-animation`}
+              className={`flex gap-8 w-max ${events.length > 3 && isScrolling ? 'animate-marquee' : ''} hover:pause-animation lg:mx-auto`}
             >
-              {[...events, ...events].map((event, index) => (
+              {(events.length > 3 ? [...events, ...events] : events).map((event, index) => (
                 <motion.article
                   key={`${event.id || index}-${index}`}
                   initial={{ opacity: 0, y: 50 }}

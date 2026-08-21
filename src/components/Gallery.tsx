@@ -13,7 +13,7 @@ export default function Gallery() {
         // Map backend data to match the static gallery format
         const dynamicImages = data.map((img: any) => ({
           id: img.id,
-          title: img.title || 'Gallery Image',
+          title: img.title || '',
           category: 'UPLOADED',
           url: img.base64Data
         }));
@@ -56,10 +56,11 @@ export default function Gallery() {
                   alt={item.title || 'Gallery Image'} 
                   className="w-full h-auto object-cover transition-all duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                  {item.category && <span className="text-accent text-xs uppercase tracking-wider font-semibold mb-1">{item.category}</span>}
-                  {item.title && <h3 className="text-white font-display text-xl font-bold uppercase">{item.title}</h3>}
-                </div>
+                {item.category === 'UPLOADED' && item.title && (
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                    <h3 className="text-white font-display text-xl font-bold uppercase">{item.title}</h3>
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>
