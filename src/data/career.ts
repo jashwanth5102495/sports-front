@@ -6,7 +6,7 @@ export const career = [
     competition: "NCAA",
     description: "Began collegiate career at Northwestern University.",
     image: "/gal/7.webp",
-    position: "object-center"
+    position: "object-top"
   },
   {
     year: "2021",
@@ -33,7 +33,7 @@ export const career = [
     competition: "NCAA",
     description: "58 goals, 50 assists. Tewaaraton finalist, IWLCA First-Team All-American, and NCAA national champion.",
     image: "/2023.webp",
-    position: "object-center"
+    position: "object-top"
   },
   {
     year: "2024",
@@ -42,7 +42,7 @@ export const career = [
     competition: "Pro Lacrosse College Draft",
     description: "101-point graduate season; 57 assists. Repeat IWLCA First-Team All-American. Drafted professionally.",
     image: "/gal/5.webp",
-    position: "object-center"
+    position: "object-top"
   },
   {
     year: "2025",
@@ -51,6 +51,6 @@ export const career = [
     competition: "WLL",
     description: "Professional attacker with New York Charging in the Women's Lacrosse League.",
     image: "/g5.webp",
-    position: "object-center"
+    position: "object-top"
   }
 ];

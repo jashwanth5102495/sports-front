@@ -66,7 +66,7 @@ export default function Hero() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 1.5, ease: "easeInOut" }}
-              className="absolute inset-0 w-full h-full object-cover object-[70%_center] lg:object-center lg:mix-blend-lighten"
+              className="absolute inset-0 w-full h-full object-cover object-[70%_12%] lg:object-[center_12%] lg:mix-blend-lighten"
             />
           </AnimatePresence>
           {/* Blend gradient from left */}
