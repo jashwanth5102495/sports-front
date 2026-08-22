@@ -14,7 +14,7 @@ const DEFAULT_HERO_STATS = [
 
 const heroImages = [
   { src: '/1.webp', duration: 5000 },
-  { src: '/01.webp', duration: 4000 },
+  { src: '/nb.webp', duration: 4000 },
   { src: '/2.webp', duration: 4000 },
   { src: '/3.webp', duration: 4000 },
   { src: '/4.webp', duration: 4000 }
