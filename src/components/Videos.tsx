@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Play } from 'lucide-react';
+import { Play, Lock } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { videos as staticVideos } from '../data/videos';
 import { getYouTubeId } from '../utils/youtube';
@@ -145,6 +145,18 @@ export default function Videos() {
               </motion.div>
             ))}
           </div>
+        </div>
+
+        {/* Admin Link Button */}
+        <div className="mt-16 flex justify-start">
+          <a 
+            href="/admin" 
+            className="flex items-center gap-2 text-zinc-600 hover:text-accent transition-colors text-xs font-semibold uppercase tracking-widest group border border-zinc-800/40 hover:border-accent/30 px-3 py-1.5 rounded bg-zinc-950/20"
+            title="Admin Login"
+          >
+            <Lock size={12} className="group-hover:rotate-12 transition-transform" />
+            <span>Admin Portal</span>
+          </a>
         </div>
       </div>
     </section>
