@@ -62,6 +62,7 @@ export default function Admin() {
   // Events empty state message
   const [eventsEmptyMessage, setEventsEmptyMessage] = useState('');
   const [eventsMessageStatus, setEventsMessageStatus] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const DEFAULT_STATISTICS: StatItem[] = [
     { label: 'CAREER POINTS', value: '368' },
@@ -235,7 +236,9 @@ export default function Admin() {
 
   const submitVideo = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
     if (!videoUrl) return alert('Provide a YouTube URL first.');
+    setIsSubmitting(true);
     setStatus('Submitting video...');
     try {
       const res = await fetch(`${API_URL}/api/videos`, {
@@ -263,6 +266,8 @@ export default function Admin() {
       }
     } catch (err) {
       setStatus('Error connecting to database.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -377,7 +382,9 @@ export default function Admin() {
 
   const submitEvent = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
     if (!eventImageBase64) return alert('Select an image first.');
+    setIsSubmitting(true);
     setStatus('Submitting event...');
     try {
       const res = await fetch(`${API_URL}/api/events`, {
@@ -402,13 +409,17 @@ export default function Admin() {
       }
     } catch (err) {
       setStatus('Error connecting to database.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const submitImage = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
     if (!imageBase64) return alert('Select an image first.');
     
+    setIsSubmitting(true);
     setStatus('Uploading image...');
     try {
       const res = await fetch(`${API_URL}/api/images`, {
@@ -433,6 +444,8 @@ export default function Admin() {
       }
     } catch (err: any) {
       setStatus(`Error connecting to database: ${err.message}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -656,7 +669,9 @@ export default function Admin() {
                 
                 {eventImageBase64 && <img src={eventImageBase64} alt="Preview" className="w-full h-48 object-cover rounded border border-white/10 mt-4" />}
                 
-                <button type="submit" className="w-full bg-accent text-white font-bold uppercase tracking-wider p-3 rounded hover:bg-accent-hover transition mt-6">Publish Event</button>
+                <button type="submit" disabled={isSubmitting} className="w-full bg-accent text-white font-bold uppercase tracking-wider p-3 rounded hover:bg-accent-hover transition mt-6 disabled:opacity-50 disabled:cursor-not-allowed">
+                  {isSubmitting ? 'Publishing...' : 'Publish Event'}
+                </button>
               </form>
             </div>
 
@@ -704,7 +719,9 @@ export default function Admin() {
                 <input type="text" placeholder="Image Title (Optional)" value={imageTitle} onChange={e => setImageTitle(e.target.value)} className="w-full bg-black/50 border border-white/20 rounded p-3 text-white focus:outline-none focus:border-accent" />
                 <input required type="file" accept="image/*" onChange={(e) => handleImageUpload(e, setImageBase64)} className="w-full bg-black/50 border border-white/20 rounded p-3 text-white file:bg-accent file:border-none file:text-white file:px-4 file:py-2 file:rounded file:mr-4 file:cursor-pointer file:font-bold file:uppercase file:tracking-wider file:text-[11px]" />
                 {imageBase64 && <img src={imageBase64} alt="Preview" className="w-full h-48 object-cover rounded border border-white/10" />}
-                <button type="submit" className="w-full bg-accent text-white font-bold uppercase tracking-wider p-3 rounded hover:bg-accent-hover transition mt-4">Upload Image</button>
+                <button type="submit" disabled={isSubmitting} className="w-full bg-accent text-white font-bold uppercase tracking-wider p-3 rounded hover:bg-accent-hover transition mt-4 disabled:opacity-50 disabled:cursor-not-allowed">
+                  {isSubmitting ? 'Uploading...' : 'Upload Image'}
+                </button>
               </form>
             </div>
 
@@ -930,7 +947,9 @@ export default function Admin() {
                   <span className="text-sm font-semibold">Set as Featured Video (Highlight on top of Videos page)</span>
                 </label>
 
-                <button type="submit" className="w-full bg-accent text-white font-bold uppercase tracking-wider p-3 rounded hover:bg-accent-hover transition mt-6">Publish Video</button>
+                <button type="submit" disabled={isSubmitting} className="w-full bg-accent text-white font-bold uppercase tracking-wider p-3 rounded hover:bg-accent-hover transition mt-6 disabled:opacity-50 disabled:cursor-not-allowed">
+                  {isSubmitting ? 'Publishing...' : 'Publish Video'}
+                </button>
               </form>
             </div>
 

@@ -5,8 +5,8 @@ export const career = [
     team: "Northwestern Wildcats",
     competition: "NCAA",
     description: "Began collegiate career at Northwestern University.",
-    image: "/gal/7.webp",
-    position: "object-top"
+    image: "/gal/scr_img_13 (1).webp",
+    position: "object-right"
   },
   {
     year: "2021",

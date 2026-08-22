@@ -27,8 +27,20 @@ export default function Videos() {
 
   if (videoList.length === 0) return null;
 
-  const featuredVideo = videoList.find(v => v.featured) || videoList[0];
-  const otherVideos = videoList.filter(v => v.id !== featuredVideo.id);
+  // Filter unique videos by youtubeUrl to prevent duplicate display in the UI
+  const uniqueVideos: any[] = [];
+  const seenUrls = new Set<string>();
+  for (const video of videoList) {
+    const url = (video.youtubeUrl || '').trim().toLowerCase();
+    if (url && !seenUrls.has(url)) {
+      seenUrls.add(url);
+      uniqueVideos.push(video);
+    }
+  }
+
+  const listToRender = uniqueVideos.length > 0 ? uniqueVideos : videoList;
+  const featuredVideo = listToRender.find(v => v.featured) || listToRender[0];
+  const otherVideos = listToRender.filter(v => v.id !== featuredVideo.id);
 
   const getThumbnail = (video: any) => {
     if (video.thumbnail) return video.thumbnail;
