@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Play, Lock } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { videos as staticVideos } from '../data/videos';
 import { getYouTubeId } from '../utils/youtube';
@@ -7,6 +7,7 @@ import { getYouTubeId } from '../utils/youtube';
 export default function Videos() {
   const [videoList, setVideoList] = useState<any[]>([]);
   const [playingId, setPlayingId] = useState<string | number | null>(null);
+  const [activeVideo, setActiveVideo] = useState<any>(null);
   
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -14,14 +15,26 @@ export default function Videos() {
     fetch(`${API_URL}/api/videos`)
       .then(res => res.json())
       .then(data => {
-        if (data && data.length > 0) {
-          setVideoList(data);
-        } else {
-          setVideoList(staticVideos);
+        const list = (data && data.length > 0) ? data : staticVideos;
+        setVideoList(list);
+        
+        // Find initial active video
+        const uniqueVideos: any[] = [];
+        const seenUrls = new Set<string>();
+        for (const video of list) {
+          const url = (video.youtubeUrl || '').trim().toLowerCase();
+          if (url && !seenUrls.has(url)) {
+            seenUrls.add(url);
+            uniqueVideos.push(video);
+          }
         }
+        const initialActive = uniqueVideos.find(v => v.featured) || uniqueVideos[0];
+        setActiveVideo(initialActive);
       })
       .catch(() => {
         setVideoList(staticVideos);
+        const initialActive = staticVideos.find(v => v.featured) || staticVideos[0];
+        setActiveVideo(initialActive);
       });
   }, []);
 
@@ -39,8 +52,8 @@ export default function Videos() {
   }
 
   const listToRender = uniqueVideos.length > 0 ? uniqueVideos : videoList;
-  const featuredVideo = listToRender.find(v => v.featured) || listToRender[0];
-  const otherVideos = listToRender.filter(v => v.id !== featuredVideo.id);
+  const currentActiveVideo = activeVideo || listToRender.find(v => v.featured) || listToRender[0];
+  const otherVideos = listToRender.filter(v => v.id !== currentActiveVideo?.id);
 
   const getThumbnail = (video: any) => {
     if (video.thumbnail) return video.thumbnail;
@@ -113,51 +126,71 @@ export default function Videos() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Featured Video */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.98 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="lg:col-span-2 relative group border border-zinc-800"
-          >
-            {renderVideoPlayer(featuredVideo, true)}
-          </motion.div>
+          {/* Main Video Player */}
+          <div className="lg:col-span-2 flex flex-col gap-4">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="relative group border border-zinc-800"
+            >
+              {currentActiveVideo && renderVideoPlayer(currentActiveVideo, true)}
+            </motion.div>
+            
+            {currentActiveVideo && (
+              <div className="mt-2">
+                <h3 className="text-xl md:text-2xl font-display font-bold text-white uppercase tracking-wide">
+                  {currentActiveVideo.title}
+                </h3>
+              </div>
+            )}
+          </div>
 
-          {/* Other Videos */}
-          <div className="flex flex-col gap-8">
-            {otherVideos.map((video, index) => (
-              <motion.div
-                key={video.id}
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                className="group flex flex-col sm:flex-row lg:flex-col gap-4 border border-zinc-800 p-4 bg-zinc-950 hover:border-zinc-600 transition-colors h-full"
-              >
-                <div className="relative aspect-video sm:w-1/2 lg:w-full overflow-hidden shrink-0">
-                  {renderVideoPlayer(video, false)}
-                </div>
-                <div className="flex-1 flex items-center lg:items-start lg:pt-2">
-                  <h4 className="text-lg font-display font-bold text-white uppercase group-hover:text-accent transition-colors leading-tight">
-                    {video.title}
-                  </h4>
-                </div>
-              </motion.div>
-            ))}
+          {/* Collection / Other Videos */}
+          <div className="flex flex-col gap-6">
+            <h4 className="text-sm font-semibold uppercase tracking-widest text-zinc-500 mb-2">Video Collection</h4>
+            <div className="flex flex-col gap-6 max-h-[600px] overflow-y-auto pr-2 no-scrollbar">
+              {otherVideos.map((video, index) => (
+                <motion.div
+                  key={video.id}
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05, duration: 0.4 }}
+                  onClick={() => {
+                    setActiveVideo(video);
+                    setPlayingId(video.id); // Autoplay
+                  }}
+                  className="group flex gap-4 border border-zinc-800/40 hover:border-zinc-700/80 p-3 bg-zinc-950/40 hover:bg-zinc-900/40 transition-all duration-300 cursor-pointer rounded"
+                >
+                  <div className="relative w-32 aspect-video overflow-hidden shrink-0 bg-black rounded border border-zinc-800">
+                    <img 
+                      src={getThumbnail(video)} 
+                      alt={video.title} 
+                      className="w-full h-full object-cover opacity-70 group-hover:opacity-40 group-hover:scale-105 transition-all duration-500"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="w-8 h-8 pl-0.5 bg-accent rounded-full flex items-center justify-center text-zinc-950 scale-90">
+                        <Play size={14} />
+                      </div>
+                    </div>
+                    {video.duration && (
+                      <div className="absolute bottom-1 right-1 bg-zinc-950/80 px-1 py-0.5 text-[10px] text-white font-medium z-10 rounded">
+                        {video.duration}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex-1 flex flex-col justify-center">
+                    <h4 className="text-sm font-display font-semibold text-white uppercase group-hover:text-accent transition-colors leading-snug line-clamp-2">
+                      {video.title}
+                    </h4>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Admin Link Button */}
-        <div className="mt-16 flex justify-start">
-          <a 
-            href="/admin" 
-            className="flex items-center gap-2 text-zinc-600 hover:text-accent transition-colors text-xs font-semibold uppercase tracking-widest group border border-zinc-800/40 hover:border-accent/30 px-3 py-1.5 rounded bg-zinc-950/20"
-            title="Admin Login"
-          >
-            <Lock size={12} className="group-hover:rotate-12 transition-transform" />
-            <span>Admin Portal</span>
-          </a>
-        </div>
       </div>
     </section>
   );

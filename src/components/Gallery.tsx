@@ -66,40 +66,7 @@ export default function Gallery() {
           </div>
         )}
 
-        {/* Video's Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-24 mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl font-display font-bold uppercase mb-4 text-white">
-            Videos
-          </h2>
-        </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {['/1.mp4', '/2.mp4'].map((src, index) => (
-            <motion.div
-              key={src}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              className="relative overflow-hidden bg-zinc-950 border border-zinc-800 hover:border-zinc-700 transition-colors"
-            >
-              <video
-                src={`${src}#t=0.001`}
-                controls
-                playsInline
-                preload="auto"
-                className="w-full h-auto"
-              >
-                <source src={src} type="video/mp4" />
-              </video>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   );
