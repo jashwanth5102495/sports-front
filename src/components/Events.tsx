@@ -64,21 +64,12 @@ export default function Events() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center py-16 px-8 border border-zinc-800 bg-zinc-900/50 rounded-xl max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8"
+            className="text-center py-16 px-8 border border-zinc-800 bg-zinc-900/50 rounded-xl"
           >
-            <div className="w-full md:w-1/2 aspect-video overflow-hidden rounded-lg border border-zinc-700 relative shrink-0">
-              <img src="/ev.png" alt="Upcoming Event" className="w-full h-full object-cover" />
-              <div className="absolute top-3 left-3 bg-accent text-zinc-950 px-3 py-1 text-xs font-bold uppercase tracking-wider">
-                UPCOMING EVENT
-              </div>
-            </div>
-            <div className="text-left flex-1">
-              <Calendar size={36} className="text-accent mb-4" />
-              <h3 className="text-2xl font-display font-bold text-white uppercase mb-2">Upcoming Events</h3>
-              <p className="text-zinc-400 text-base leading-relaxed">
-                {emptyMessage}
-              </p>
-            </div>
+            <Calendar size={48} className="mx-auto text-zinc-600 mb-6" />
+            <p className="text-zinc-400 text-lg max-w-xl mx-auto leading-relaxed">
+              {emptyMessage}
+            </p>
           </motion.div>
         ) : (
           <div className="overflow-x-auto lg:overflow-hidden relative py-2 no-scrollbar">
@@ -96,11 +87,17 @@ export default function Events() {
                   onClick={() => setSelectedEvent(event)}
                 >
                   <div className="relative aspect-video overflow-hidden bg-black">
-                    <img 
-                      src={event.image || '/ev.png'} 
-                      alt={event.title} 
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
-                    />
+                    {event.image ? (
+                      <img 
+                        src={event.image} 
+                        alt={event.title} 
+                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-zinc-700">
+                        <Calendar size={48} />
+                      </div>
+                    )}
                     <div className="absolute top-4 left-4 bg-accent text-zinc-950 px-3 py-1 text-xs font-bold uppercase tracking-wider">
                       UPCOMING EVENT
                     </div>
@@ -150,10 +147,12 @@ export default function Events() {
                 <X size={20} />
               </button>
               
-              <div className="w-full h-64 sm:h-80 relative">
-                <img src={selectedEvent.image || '/ev.png'} alt={selectedEvent.title} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 to-transparent"></div>
-              </div>
+              {selectedEvent.image && (
+                <div className="w-full h-64 sm:h-80 relative">
+                  <img src={selectedEvent.image} alt={selectedEvent.title} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 to-transparent"></div>
+                </div>
+              )}
               
               <div className="p-8 md:p-12">
                 <div className="flex items-center gap-4 mb-4">

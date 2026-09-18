@@ -318,15 +318,6 @@ export default function Admin() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const validCredentials = [
-      { user: 'admin', pass: 'admin123' },
-      { user: 'admin', pass: 'admin1234' }
-    ];
-
-    const isValidLocal = validCredentials.some(
-      c => c.user === username && c.pass === password
-    );
-
     try {
       const res = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
@@ -338,23 +329,11 @@ export default function Admin() {
         setToken(data.token);
         sessionStorage.setItem('adminToken', data.token);
         setIsAuthenticated(true);
-      } else if (isValidLocal) {
-        const dummyToken = 'admin-session-token-' + Date.now();
-        setToken(dummyToken);
-        sessionStorage.setItem('adminToken', dummyToken);
-        setIsAuthenticated(true);
       } else {
         alert(data.error || 'Invalid credentials');
       }
     } catch (err) {
-      if (isValidLocal) {
-        const dummyToken = 'admin-session-token-' + Date.now();
-        setToken(dummyToken);
-        sessionStorage.setItem('adminToken', dummyToken);
-        setIsAuthenticated(true);
-      } else {
-        alert('Error connecting to database');
-      }
+      alert('Error connecting to database');
     }
   };
 
