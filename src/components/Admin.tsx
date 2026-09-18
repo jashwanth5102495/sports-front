@@ -383,7 +383,7 @@ export default function Admin() {
   const submitEvent = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isSubmitting) return;
-    if (!eventImageBase64) return alert('Select an image first.');
+    const finalImage = eventImageBase64 || '/ev.png';
     setIsSubmitting(true);
     setStatus('Submitting event...');
     try {
@@ -397,7 +397,7 @@ export default function Admin() {
           title: eventTitle,
           date: eventDate,
           description: eventDescription,
-          image: eventImageBase64
+          image: finalImage
         })
       });
       if (res.ok) {
@@ -663,8 +663,8 @@ export default function Admin() {
                 <textarea required placeholder="Event description and details..." value={eventDescription} onChange={e => setEventDescription(e.target.value)} className="w-full bg-black/50 border border-white/20 rounded p-3 text-white h-32 focus:outline-none focus:border-accent" />
                 
                 <div className="pt-2">
-                  <label className="block text-sm text-white/70 mb-2 uppercase tracking-wider font-bold">Event Image</label>
-                  <input required type="file" accept="image/*" onChange={(e) => handleImageUpload(e, setEventImageBase64)} className="w-full bg-black/50 border border-white/20 rounded p-3 text-white file:bg-accent file:border-none file:text-white file:px-4 file:py-2 file:rounded file:mr-4 file:cursor-pointer file:font-bold file:uppercase file:tracking-wider file:text-[11px]" />
+                  <label className="block text-sm text-white/70 mb-2 uppercase tracking-wider font-bold">Event Image (Defaults to ev.png if empty)</label>
+                  <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, setEventImageBase64)} className="w-full bg-black/50 border border-white/20 rounded p-3 text-white file:bg-accent file:border-none file:text-white file:px-4 file:py-2 file:rounded file:mr-4 file:cursor-pointer file:font-bold file:uppercase file:tracking-wider file:text-[11px]" />
                 </div>
                 
                 {eventImageBase64 && <img src={eventImageBase64} alt="Preview" className="w-full h-48 object-cover rounded border border-white/10 mt-4" />}

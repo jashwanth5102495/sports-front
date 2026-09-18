@@ -64,12 +64,34 @@ export default function Events() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center py-16 px-8 border border-zinc-800 bg-zinc-900/50 rounded-xl"
+            className="flex flex-col md:flex-row items-center gap-8 border border-zinc-800 bg-zinc-900/50 rounded-xl p-6 md:p-8 max-w-4xl mx-auto cursor-pointer group"
+            onClick={() => setSelectedEvent({
+              title: "Women's Elite Lacrosse Showcase",
+              date: "October 17th, 2026 • 8:00am - 1:00pm",
+              description: "Where future stars get discovered. Class of 2028 & 2029 Women's Elite Lacrosse Showcase. Founded by legendary players Izzy Scane and Erin Coykendall.\n\n" + emptyMessage,
+              image: "/ev.png"
+            })}
           >
-            <Calendar size={48} className="mx-auto text-zinc-600 mb-6" />
-            <p className="text-zinc-400 text-lg max-w-xl mx-auto leading-relaxed">
-              {emptyMessage}
-            </p>
+            <div className="w-full md:w-1/2 aspect-video overflow-hidden rounded-lg bg-black border border-zinc-800">
+              <img src="/ev.png" alt="Upcoming Event" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="w-full md:w-1/2 flex flex-col justify-center">
+              <div className="bg-accent text-zinc-950 px-3 py-1 text-xs font-bold uppercase tracking-wider w-fit mb-3">
+                UPCOMING EVENT
+              </div>
+              <h3 className="text-2xl font-display font-bold text-white uppercase mb-2 group-hover:text-accent transition-colors">
+                Women's Elite Lacrosse Showcase
+              </h3>
+              <p className="text-zinc-400 text-sm mb-3 font-medium">
+                October 17th, 2026 • 8:00am - 1:00pm
+              </p>
+              <p className="text-zinc-400 text-sm leading-relaxed mb-4">
+                {emptyMessage}
+              </p>
+              <button className="flex items-center gap-2 text-white group-hover:text-accent transition-colors uppercase tracking-wider text-xs font-semibold">
+                Event Details <ArrowRight size={16} />
+              </button>
+            </div>
           </motion.div>
         ) : (
           <div className="overflow-x-auto lg:overflow-hidden relative py-2 no-scrollbar">
@@ -87,17 +109,11 @@ export default function Events() {
                   onClick={() => setSelectedEvent(event)}
                 >
                   <div className="relative aspect-video overflow-hidden bg-black">
-                    {event.image ? (
-                      <img 
-                        src={event.image} 
-                        alt={event.title} 
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-zinc-700">
-                        <Calendar size={48} />
-                      </div>
-                    )}
+                    <img 
+                      src={event.image || '/ev.png'} 
+                      alt={event.title} 
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                    />
                     <div className="absolute top-4 left-4 bg-accent text-zinc-950 px-3 py-1 text-xs font-bold uppercase tracking-wider">
                       UPCOMING EVENT
                     </div>
@@ -147,12 +163,10 @@ export default function Events() {
                 <X size={20} />
               </button>
               
-              {selectedEvent.image && (
-                <div className="w-full h-64 sm:h-80 relative">
-                  <img src={selectedEvent.image} alt={selectedEvent.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 to-transparent"></div>
-                </div>
-              )}
+              <div className="w-full h-64 sm:h-80 relative">
+                <img src={selectedEvent.image || '/ev.png'} alt={selectedEvent.title} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 to-transparent"></div>
+              </div>
               
               <div className="p-8 md:p-12">
                 <div className="flex items-center gap-4 mb-4">
